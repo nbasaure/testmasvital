@@ -5,6 +5,7 @@ import QuizQuestion from "@/components/QuizQuestion";
 import QuizEmailCapture from "@/components/QuizEmailCapture";
 import QuizResult from "@/components/QuizResult";
 import { questions, calculateResults, type ProductKey } from "@/lib/quizData";
+import logo from "@/assets/logo-masvital.png";
 
 type QuizStep = "hero" | "questions" | "email" | "result";
 
@@ -47,7 +48,10 @@ const Index = () => {
       {step === "hero" && <QuizHero onStart={handleStart} />}
 
       {step === "questions" && (
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+        <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-12">
+          <div className="absolute top-6 right-6">
+            <img src={logo} alt="Más Vital" className="h-8 md:h-10" />
+          </div>
           <QuizProgress current={currentQuestion} total={questions.length} />
           <QuizQuestion
             question={questions[currentQuestion]}
@@ -58,13 +62,19 @@ const Index = () => {
       )}
 
       {step === "email" && (
-        <div className="min-h-screen flex items-center justify-center px-6 py-12">
+        <div className="relative min-h-screen flex items-center justify-center px-6 py-12">
+          <div className="absolute top-6 right-6">
+            <img src={logo} alt="Más Vital" className="h-8 md:h-10" />
+          </div>
           <QuizEmailCapture onSubmit={handleEmailSubmit} />
         </div>
       )}
 
       {step === "result" && result && (
-        <div className="min-h-screen flex items-center justify-center px-6 py-12">
+        <div className="relative min-h-screen flex items-center justify-center px-6 py-12">
+          <div className="absolute top-6 right-6">
+            <img src={logo} alt="Más Vital" className="h-8 md:h-10" />
+          </div>
           <QuizResult
             primary={result.primary}
             secondary={result.secondary}

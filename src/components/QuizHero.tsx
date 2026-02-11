@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
+import logo from "@/assets/logo-masvital.png";
 
 interface QuizHeroProps {
   onStart: () => void;
@@ -12,6 +13,11 @@ const QuizHero = ({ onStart }: QuizHeroProps) => {
       <div className="absolute inset-0">
         <img src={heroBg} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-hero-gradient opacity-85" />
+      </div>
+
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-20">
+        <img src={logo} alt="Más Vital" className="h-10 md:h-12" />
       </div>
 
       {/* Content */}
@@ -29,7 +35,7 @@ const QuizHero = ({ onStart }: QuizHeroProps) => {
             className="mb-8"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground/80 text-sm font-body tracking-wide">
-              ✨ Test gratuito · 60 segundos
+              ✨ Test rápido de 60 segundos
             </span>
           </motion.div>
 
@@ -73,7 +79,7 @@ const QuizHero = ({ onStart }: QuizHeroProps) => {
             transition={{ delay: 1.2, duration: 0.8 }}
             className="mt-6 text-primary-foreground/50 text-sm font-body"
           >
-            Más de 2.000 personas ya descubrieron su suplemento ideal
+            Más de 5.000 personas ya descubrieron su suplemento ideal
           </motion.p>
         </motion.div>
       </div>
