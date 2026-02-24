@@ -5,11 +5,15 @@ interface QuizResultProps {
   primary: ProductKey;
   secondary: ProductKey;
   showCombo: boolean;
+  scores: Record<ProductKey, number>;
 }
 
-const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
+const QuizResult = ({ primary, secondary, showCombo, scores }: QuizResultProps) => {
   const mainProduct = products[primary];
   const secondaryProduct = products[secondary];
+
+  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const matchPct = totalScore > 0 ? Math.min(99, Math.round((scores[primary] / totalScore) * 100) + 40) : 92;
 
   return (
     <motion.div
@@ -19,11 +23,23 @@ const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
       className="w-full max-w-2xl mx-auto"
     >
       {/* Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-8">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/15 border border-accent/30 mb-5"
+        >
+          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+          <span className="text-sm font-body font-semibold text-accent-foreground/80 tracking-wide">
+            {matchPct}% de coincidencia con tu perfil
+          </span>
+        </motion.div>
+
         <motion.span
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.3, type: "spring" }}
+          transition={{ delay: 0.35, type: "spring" }}
           className="text-6xl block mb-4"
         >
           {mainProduct.emoji}
@@ -39,24 +55,27 @@ const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="rounded-2xl bg-card border border-border shadow-quiz overflow-hidden mb-6"
+        className="rounded-2xl bg-card border border-border shadow-quiz overflow-hidden mb-5"
       >
-        <div className="p-8 md:p-10">
-          <p className="text-foreground/80 font-body leading-relaxed mb-6">
+        {/* Card gradient top bar */}
+        <div className="h-1.5 bg-gradient-to-r from-primary via-primary/80 to-accent" />
+
+        <div className="p-7 md:p-9">
+          <p className="text-foreground/75 font-body leading-relaxed mb-6">
             {mainProduct.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-6 p-6 rounded-xl bg-secondary/50">
+          <div className="flex flex-col sm:flex-row items-center gap-6 p-5 rounded-xl bg-secondary/50 border border-border/50">
             <img
               src={mainProduct.imageUrl}
               alt={mainProduct.name}
-              className="w-32 h-32 object-contain rounded-lg"
+              className="w-28 h-28 object-contain rounded-lg"
             />
             <div className="flex-1 text-center sm:text-left">
               <h3 className="font-display font-semibold text-xl text-foreground mb-1">
                 {mainProduct.name}
               </h3>
-              <p className="text-sm text-muted-foreground font-body mb-4">
+              <p className="text-sm text-muted-foreground font-body mb-5">
                 {mainProduct.benefit}
               </p>
               <motion.a
@@ -65,7 +84,7 @@ const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
                 href={mainProduct.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-body font-semibold rounded-full transition-all hover:brightness-110"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-accent text-accent-foreground font-body font-semibold rounded-full glow-gold transition-all hover:brightness-110"
               >
                 Ver mi recomendación
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,21 +103,21 @@ const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="rounded-2xl bg-card border border-border shadow-quiz overflow-hidden"
       >
-        <div className="p-6 md:p-8">
-          <p className="text-sm font-body text-muted-foreground mb-4 uppercase tracking-wide">
+        <div className="p-6 md:p-7">
+          <p className="text-xs font-body font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
             {showCombo ? "🔥 Complemento recomendado — ¡Combo ideal!" : "También te puede interesar"}
           </p>
           <div className="flex items-center gap-4">
             <img
               src={secondaryProduct.imageUrl}
               alt={secondaryProduct.name}
-              className="w-20 h-20 object-contain rounded-lg"
+              className="w-20 h-20 object-contain rounded-lg shrink-0"
             />
-            <div className="flex-1">
-              <h4 className="font-display font-semibold text-foreground">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-display font-semibold text-foreground truncate">
                 {secondaryProduct.emoji} {secondaryProduct.name}
               </h4>
-              <p className="text-sm text-muted-foreground font-body mt-1">
+              <p className="text-sm text-muted-foreground font-body mt-1 line-clamp-2">
                 {secondaryProduct.benefit}
               </p>
             </div>
@@ -108,7 +127,7 @@ const QuizResult = ({ primary, secondary, showCombo }: QuizResultProps) => {
               rel="noopener noreferrer"
               className="shrink-0 px-5 py-2.5 border border-primary text-primary font-body text-sm font-medium rounded-full hover:bg-primary hover:text-primary-foreground transition-all"
             >
-              Ver producto
+              Ver
             </a>
           </div>
         </div>
