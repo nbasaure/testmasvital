@@ -72,9 +72,20 @@ const QuizResult = ({ primary, secondary, showCombo, scores }: QuizResultProps) 
               className="w-28 h-28 object-contain rounded-lg"
             />
             <div className="flex-1 text-center sm:text-left">
-              <h3 className="font-display font-semibold text-xl text-foreground mb-1">
+        <h3 className="font-display font-semibold text-xl text-foreground mb-1">
                 {mainProduct.name}
               </h3>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/15 text-primary border border-primary/30">
+                  {matchPct}% de coincidencia
+                </span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-secondary mb-4 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-primary/60 transition-all duration-700"
+                  style={{ width: `${matchPct}%` }}
+                />
+              </div>
               <p className="text-sm text-muted-foreground font-body mb-5">
                 {mainProduct.benefit}
               </p>

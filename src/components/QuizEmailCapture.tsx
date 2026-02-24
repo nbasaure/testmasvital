@@ -6,9 +6,9 @@ interface QuizEmailCaptureProps {
 }
 
 const benefits = [
-  { icon: "🎯", text: "Recomendación 100% personalizada según tu perfil" },
-  { icon: "🚀", text: "Basada en tus hábitos y necesidades reales" },
-  { icon: "🎁", text: "Descuento exclusivo en tu primer pedido" },
+  { icon: "🎯", text: "Recomendación personalizada en base a tus respuestas" },
+  { icon: "🔒", text: "Sin spam, solo tu resultado" },
+  { icon: "✅", text: "100% gratuito" },
 ];
 
 const QuizEmailCapture = ({ onSubmit }: QuizEmailCaptureProps) => {
